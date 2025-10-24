@@ -247,7 +247,7 @@ function Settings() {
 
           <div className="space-y-3 text-sm text-gray-700">
             <p>
-              <strong>버전:</strong> Cozac's Life Debugger v1.0
+              <strong>버전:</strong> Cozac's Life Debugger v1.1
             </p>
             <p>
               <strong>총 로그:</strong> {appData.metadata.totalLogs}개

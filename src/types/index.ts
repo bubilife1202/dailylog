@@ -86,7 +86,7 @@ export interface AppData {
 
 // Default Values
 export const DEFAULT_APP_DATA: AppData = {
-  version: '1.0',
+  version: '1.1',
   isFirstVisit: true,
   baseCodeHistory: [],
   dailyLogs: [],
