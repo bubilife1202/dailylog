@@ -23,7 +23,7 @@
 
    **제목:**
    ```
-   🚀 Launch Cozac's Life Debugger MVP (v1.0)
+   Implement Cozac's Life Debugger MVP with AdSense Integration (v1.1)
    ```
 
    **본문:** (아래 내용 복사)
@@ -229,7 +229,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 ```bash
 gh pr create \
-  --title "🚀 Launch Cozac's Life Debugger MVP (v1.0)" \
+  --title "Implement Cozac's Life Debugger MVP with AdSense Integration (v1.1)" \
   --body-file PR_BODY.md \
   --base main
 ```
