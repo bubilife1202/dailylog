@@ -79,7 +79,7 @@ function Onboarding() {
         {/* 시작 버튼 */}
         <button
           onClick={handleStart}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg transition duration-200 shadow-lg hover:shadow-xl"
+          className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-5 px-6 rounded-lg transition duration-200 shadow-lg hover:shadow-xl active:scale-98 min-h-[60px] text-lg"
         >
           Base Code 정의하러 가기
         </button>

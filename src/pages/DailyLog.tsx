@@ -130,12 +130,12 @@ function DailyLog() {
           <div className="flex items-center justify-between mb-8">
             <button
               onClick={() => handleDateChange(-1)}
-              className="p-2 hover:bg-gray-100 rounded-lg"
+              className="min-w-[48px] min-h-[48px] flex items-center justify-center hover:bg-gray-100 active:bg-gray-200 rounded-lg text-2xl transition"
             >
               ←
             </button>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-gray-900">
+            <div className="text-center flex-1 mx-4">
+              <p className="text-xl md:text-2xl font-bold text-gray-900">
                 {new Date(currentDate).toLocaleDateString('ko-KR', {
                   month: 'long',
                   day: 'numeric',
@@ -146,7 +146,7 @@ function DailyLog() {
             <button
               onClick={() => handleDateChange(1)}
               disabled={currentDate >= new Date().toISOString().split('T')[0]}
-              className="p-2 hover:bg-gray-100 rounded-lg disabled:opacity-30 disabled:cursor-not-allowed"
+              className="min-w-[48px] min-h-[48px] flex items-center justify-center hover:bg-gray-100 active:bg-gray-200 rounded-lg text-2xl transition disabled:opacity-30 disabled:cursor-not-allowed"
             >
               →
             </button>
@@ -184,10 +184,10 @@ function DailyLog() {
                 <button
                   key={act}
                   onClick={() => setActivity(act)}
-                  className={`py-3 px-4 rounded-lg font-medium transition ${
+                  className={`min-h-[52px] py-3 px-4 rounded-lg font-medium transition active:scale-95 ${
                     activity === act
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:bg-gray-300'
                   }`}
                 >
                   {act}
@@ -206,14 +206,14 @@ function DailyLog() {
                 <button
                   key={emo.emoji}
                   onClick={() => setEmotion(emo.emoji)}
-                  className={`py-4 px-4 rounded-lg font-medium transition ${
+                  className={`min-h-[64px] py-4 px-4 rounded-lg font-medium transition active:scale-95 ${
                     emotion === emo.emoji
-                      ? 'bg-purple-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      ? 'bg-purple-600 text-white shadow-md'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:bg-gray-300'
                   }`}
                 >
-                  <span className="text-2xl mr-2">{emo.emoji}</span>
-                  <span className="text-sm">{emo.label}</span>
+                  <span className="text-3xl block mb-1">{emo.emoji}</span>
+                  <span className="text-xs block">{emo.label}</span>
                 </button>
               ))}
             </div>
@@ -229,14 +229,14 @@ function DailyLog() {
               value={note}
               onChange={(e) => setNote(e.target.value)}
               placeholder="예: '기획안 통과', '번아웃', '좋은 대화'"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-4 text-base border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
 
           {/* 저장 버튼 */}
           <button
             onClick={handleSave}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg transition duration-200 shadow-lg hover:shadow-xl"
+            className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-4 px-6 rounded-lg transition duration-200 shadow-lg hover:shadow-xl active:scale-98 min-h-[56px]"
           >
             로그 저장하기
           </button>

@@ -171,14 +171,14 @@ function BaseCode() {
           <div className="space-y-4">
             <button
               onClick={() => handleAnswer('A')}
-              className="w-full text-left p-6 border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 transition duration-200 group"
+              className="w-full text-left p-6 min-h-[88px] border-2 border-gray-200 rounded-xl hover:border-blue-500 hover:bg-blue-50 active:bg-blue-100 transition duration-200 group active:scale-98"
             >
               <div className="flex items-start">
-                <div className="flex-shrink-0 w-8 h-8 bg-gray-200 group-hover:bg-blue-500 text-gray-700 group-hover:text-white rounded-full flex items-center justify-center font-bold mr-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-gray-200 group-hover:bg-blue-500 group-active:bg-blue-600 text-gray-700 group-hover:text-white rounded-full flex items-center justify-center font-bold mr-4 text-lg">
                   A
                 </div>
                 <div className="flex-1">
-                  <p className="font-semibold text-gray-900 mb-1">
+                  <p className="font-semibold text-gray-900 mb-1 text-base">
                     {currentQuestion.optionA.label}
                   </p>
                   <p className="text-sm text-gray-600">
@@ -190,14 +190,14 @@ function BaseCode() {
 
             <button
               onClick={() => handleAnswer('B')}
-              className="w-full text-left p-6 border-2 border-gray-200 rounded-xl hover:border-purple-500 hover:bg-purple-50 transition duration-200 group"
+              className="w-full text-left p-6 min-h-[88px] border-2 border-gray-200 rounded-xl hover:border-purple-500 hover:bg-purple-50 active:bg-purple-100 transition duration-200 group active:scale-98"
             >
               <div className="flex items-start">
-                <div className="flex-shrink-0 w-8 h-8 bg-gray-200 group-hover:bg-purple-500 text-gray-700 group-hover:text-white rounded-full flex items-center justify-center font-bold mr-4">
+                <div className="flex-shrink-0 w-10 h-10 bg-gray-200 group-hover:bg-purple-500 group-active:bg-purple-600 text-gray-700 group-hover:text-white rounded-full flex items-center justify-center font-bold mr-4 text-lg">
                   B
                 </div>
                 <div className="flex-1">
-                  <p className="font-semibold text-gray-900 mb-1">
+                  <p className="font-semibold text-gray-900 mb-1 text-base">
                     {currentQuestion.optionB.label}
                   </p>
                   <p className="text-sm text-gray-600">

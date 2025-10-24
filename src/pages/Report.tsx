@@ -218,7 +218,7 @@ ${dailySummary}`;
           <label className="block text-lg font-semibold text-gray-900 mb-4">
             분석 기간 선택
           </label>
-          <div className="flex space-x-3">
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
             {[
               { value: '7', label: '최근 7일 (권장)' },
               { value: '14', label: '최근 14일' },
@@ -227,10 +227,10 @@ ${dailySummary}`;
               <button
                 key={option.value}
                 onClick={() => setPeriod(option.value as '7' | '14' | '30')}
-                className={`px-4 py-2 rounded-lg font-medium transition ${
+                className={`min-h-[48px] px-4 py-3 rounded-lg font-medium transition active:scale-95 ${
                   period === option.value
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200 active:bg-gray-300'
                 }`}
               >
                 {option.label}
@@ -247,10 +247,10 @@ ${dailySummary}`;
             </h2>
             <button
               onClick={() => copyToClipboard(dataPacket, 'data')}
-              className={`px-4 py-2 rounded-lg font-medium transition ${
+              className={`min-h-[44px] px-5 py-2 rounded-lg font-medium transition active:scale-95 ${
                 copiedData
                   ? 'bg-green-600 text-white'
-                  : 'bg-blue-600 hover:bg-blue-700 text-white'
+                  : 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white'
               }`}
             >
               {copiedData ? '✅ 복사 완료!' : '데이터 복사'}
@@ -271,10 +271,10 @@ ${dailySummary}`;
             </h2>
             <button
               onClick={() => copyToClipboard(MASTER_PROMPT, 'prompt')}
-              className={`px-4 py-2 rounded-lg font-medium transition ${
+              className={`min-h-[44px] px-5 py-2 rounded-lg font-medium transition active:scale-95 ${
                 copiedPrompt
                   ? 'bg-green-600 text-white'
-                  : 'bg-purple-600 hover:bg-purple-700 text-white'
+                  : 'bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white'
               }`}
             >
               {copiedPrompt ? '✅ 복사 완료!' : '프롬프트 복사'}
@@ -307,7 +307,7 @@ ${dailySummary}`;
         {/* 리포트 저장 버튼 */}
         <button
           onClick={handleSaveReport}
-          className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg transition duration-200 shadow-lg hover:shadow-xl mb-4"
+          className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-bold py-4 px-6 rounded-lg transition duration-200 shadow-lg hover:shadow-xl active:scale-98 mb-4 min-h-[56px]"
         >
           이 리포트 저장하기
         </button>

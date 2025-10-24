@@ -133,7 +133,7 @@ function Settings() {
 
           <button
             onClick={() => navigate('/base-code')}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition"
+            className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-medium py-3 px-6 rounded-lg transition active:scale-98 min-h-[52px]"
           >
             Base Code 재평가하기
           </button>
@@ -161,14 +161,14 @@ function Settings() {
           <div className="space-y-3">
             <button
               onClick={handleExportData}
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition"
+              className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-medium py-3 px-6 rounded-lg transition active:scale-98 min-h-[52px]"
             >
               내 데이터 내보내기 (JSON)
             </button>
 
             <button
               onClick={handleImportData}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-6 rounded-lg transition"
+              className="w-full bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-medium py-3 px-6 rounded-lg transition active:scale-98 min-h-[52px]"
             >
               데이터 가져오기
             </button>
@@ -194,7 +194,7 @@ function Settings() {
           {!showDeleteConfirm ? (
             <button
               onClick={() => setShowDeleteConfirm(true)}
-              className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-lg transition"
+              className="w-full bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-medium py-3 px-6 rounded-lg transition active:scale-98 min-h-[52px]"
             >
               모든 데이터 삭제
             </button>
@@ -216,7 +216,7 @@ function Settings() {
                   type="text"
                   value={deleteConfirmText}
                   onChange={(e) => setDeleteConfirmText(e.target.value)}
-                  className="w-full px-4 py-2 border border-red-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 mb-3"
+                  className="w-full px-4 py-3 text-base border-2 border-red-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 mb-3"
                   placeholder="DELETE"
                 />
                 <div className="flex space-x-3">
@@ -225,13 +225,13 @@ function Settings() {
                       setShowDeleteConfirm(false);
                       setDeleteConfirmText('');
                     }}
-                    className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-lg transition"
+                    className="flex-1 bg-gray-300 hover:bg-gray-400 active:bg-gray-500 text-gray-800 font-medium py-3 px-4 rounded-lg transition active:scale-98 min-h-[48px]"
                   >
                     취소
                   </button>
                   <button
                     onClick={handleDeleteAllData}
-                    className="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition"
+                    className="flex-1 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-medium py-3 px-4 rounded-lg transition active:scale-98 min-h-[48px]"
                   >
                     삭제
                   </button>
