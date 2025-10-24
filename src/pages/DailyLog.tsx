@@ -102,9 +102,12 @@ function DailyLog() {
       {/* 헤더 */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-xl md:text-2xl font-bold text-gray-900">
-            Cozac's Life Debugger
-          </h1>
+          <div>
+            <h1 className="text-xl md:text-2xl font-bold text-gray-900">
+              Cozac's Life Debugger
+            </h1>
+            <p className="text-xs text-gray-500 mt-1">v1.2</p>
+          </div>
           <div className="flex items-center space-x-4">
             {streak > 0 && (
               <div className="flex items-center space-x-1 text-orange-600 font-bold">
