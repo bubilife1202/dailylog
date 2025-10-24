@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveDailyLog, getDailyLog, loadAppData, getWeeklyCompletion } from '../utils/localStorage';
 import type { DailyLog as DailyLogType, ActivityType, EmotionType } from '../types';
+import Calendar from '../components/Calendar';
+import VersionFooter from '../components/VersionFooter';
 
 const activities: ActivityType[] = ['업무', '공부', '운동', '관계', '휴식', '창작', '기타'];
 const emotions: { emoji: EmotionType; label: string }[] = [
@@ -22,6 +24,8 @@ function DailyLog() {
   const [note, setNote] = useState('');
   const [streak, setStreak] = useState(0);
   const [weeklyCompletion, setWeeklyCompletion] = useState({ completed: 0, total: 7 });
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [yesterdayLog, setYesterdayLog] = useState<DailyLogType | null>(null);
 
   // 현재 날짜의 로그 로드
   useEffect(() => {
@@ -39,6 +43,13 @@ function DailyLog() {
       setNote('');
     }
 
+    // 어제 로그 로드
+    const yesterday = new Date(currentDate);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayDateStr = yesterday.toISOString().split('T')[0];
+    const yesterdayLogData = getDailyLog(yesterdayDateStr);
+    setYesterdayLog(yesterdayLogData || null);
+
     // 스트릭 및 주간 완성도 업데이트
     const data = loadAppData();
     setStreak(data.metadata.currentStreak);
@@ -49,6 +60,15 @@ function DailyLog() {
     const date = new Date(currentDate);
     date.setDate(date.getDate() + offset);
     setCurrentDate(date.toISOString().split('T')[0]);
+  };
+
+  const handleCopyYesterday = () => {
+    if (yesterdayLog) {
+      setEnergy(yesterdayLog.energy);
+      setActivity(yesterdayLog.activity);
+      setEmotion(yesterdayLog.emotion);
+      setNote(''); // 메모만 비우기
+    }
   };
 
   const handleSave = () => {
@@ -127,30 +147,79 @@ function DailyLog() {
         {/* 로그 입력 카드 */}
         <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
           {/* 날짜 선택 */}
-          <div className="flex items-center justify-between mb-8">
-            <button
-              onClick={() => handleDateChange(-1)}
-              className="min-w-[48px] min-h-[48px] flex items-center justify-center hover:bg-gray-100 active:bg-gray-200 rounded-lg text-2xl transition"
-            >
-              ←
-            </button>
-            <div className="text-center flex-1 mx-4">
-              <p className="text-xl md:text-2xl font-bold text-gray-900">
-                {new Date(currentDate).toLocaleDateString('ko-KR', {
-                  month: 'long',
-                  day: 'numeric',
-                  weekday: 'short',
-                })}
-              </p>
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <button
+                onClick={() => handleDateChange(-1)}
+                className="min-w-[48px] min-h-[48px] flex items-center justify-center hover:bg-gray-100 active:bg-gray-200 rounded-lg text-2xl transition"
+              >
+                ←
+              </button>
+              <div className="text-center flex-1 mx-4">
+                <p className="text-xl md:text-2xl font-bold text-gray-900">
+                  {new Date(currentDate).toLocaleDateString('ko-KR', {
+                    month: 'long',
+                    day: 'numeric',
+                    weekday: 'short',
+                  })}
+                </p>
+              </div>
+              <button
+                onClick={() => handleDateChange(1)}
+                disabled={currentDate >= new Date().toISOString().split('T')[0]}
+                className="min-w-[48px] min-h-[48px] flex items-center justify-center hover:bg-gray-100 active:bg-gray-200 rounded-lg text-2xl transition disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                →
+              </button>
             </div>
+
+            {/* 캘린더 토글 버튼 */}
             <button
-              onClick={() => handleDateChange(1)}
-              disabled={currentDate >= new Date().toISOString().split('T')[0]}
-              className="min-w-[48px] min-h-[48px] flex items-center justify-center hover:bg-gray-100 active:bg-gray-200 rounded-lg text-2xl transition disabled:opacity-30 disabled:cursor-not-allowed"
+              onClick={() => setShowCalendar(!showCalendar)}
+              className="w-full py-2 text-sm text-indigo-600 hover:text-indigo-700 font-medium"
             >
-              →
+              {showCalendar ? '📅 캘린더 닫기' : '📅 캘린더 보기'}
             </button>
           </div>
+
+          {/* 캘린더 뷰 */}
+          {showCalendar && (
+            <div className="mb-6">
+              <Calendar
+                dailyLogs={loadAppData().dailyLogs}
+                currentDate={currentDate}
+                onDateSelect={(date) => {
+                  setCurrentDate(date);
+                  setShowCalendar(false);
+                }}
+              />
+            </div>
+          )}
+
+          {/* 어제 로그 미리보기 */}
+          {yesterdayLog && !getDailyLog(currentDate) && (
+            <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <p className="text-sm text-blue-900 font-medium mb-2">
+                    💡 어제는 이랬어요
+                  </p>
+                  <p className="text-sm text-blue-700">
+                    에너지 {yesterdayLog.energy}/5, {yesterdayLog.activity},{' '}
+                    {yesterdayLog.emotion}
+                  </p>
+                </div>
+                <button
+                  onClick={handleCopyYesterday}
+                  className="ml-3 px-3 py-2 bg-blue-600 text-white text-xs rounded-lg hover:bg-blue-700 active:scale-95 transition whitespace-nowrap"
+                >
+                  오늘도 비슷해요
+                </button>
+              </div>
+            </div>
+          )}
+
+          <div className="border-t border-gray-200 pt-8"></div>
 
           {/* Q1: 에너지 레벨 */}
           <div className="mb-8">
@@ -257,6 +326,9 @@ function DailyLog() {
             {!canGenerateReport && ' - 최소 3일 로그 필요'}
           </button>
         </div>
+
+        {/* 버전 표시 */}
+        <VersionFooter />
       </div>
     </div>
   );

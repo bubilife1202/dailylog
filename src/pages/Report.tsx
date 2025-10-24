@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loadAppData, getDailyLogsByPeriod, saveGeneratedReport } from '../utils/localStorage';
 import type { BaseCode, ActivityType } from '../types';
+import VersionFooter from '../components/VersionFooter';
 
 const MASTER_PROMPT = `[프롬프트 명령어] v1.0
 
@@ -197,12 +198,20 @@ ${dailySummary}`;
       <div className="max-w-4xl mx-auto px-4">
         {/* 헤더 */}
         <div className="mb-6">
-          <button
-            onClick={() => navigate('/daily-log')}
-            className="text-gray-600 hover:text-gray-900 mb-4"
-          >
-            ← 돌아가기
-          </button>
+          <div className="flex items-center justify-between mb-4">
+            <button
+              onClick={() => navigate('/daily-log')}
+              className="text-gray-600 hover:text-gray-900"
+            >
+              ← 돌아가기
+            </button>
+            <button
+              onClick={() => navigate('/past-reports')}
+              className="text-indigo-600 hover:text-indigo-700 font-medium text-sm"
+            >
+              📚 과거 리포트 보기
+            </button>
+          </div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
             AI 분석을 위한 '재료'가 준비되었습니다
           </h1>
@@ -313,6 +322,9 @@ ${dailySummary}`;
         <p className="text-center text-sm text-gray-600">
           📌 리포트를 SNS에 공유하면 동기부여가 됩니다!
         </p>
+
+        {/* 버전 표시 */}
+        <VersionFooter />
       </div>
     </div>
   );

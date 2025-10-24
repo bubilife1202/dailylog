@@ -160,6 +160,13 @@ function Settings() {
           {/* 버튼들 */}
           <div className="space-y-3">
             <button
+              onClick={() => navigate('/past-reports')}
+              className="w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-medium py-3 px-6 rounded-lg transition active:scale-98 min-h-[52px]"
+            >
+              📚 과거 리포트 보기
+            </button>
+
+            <button
               onClick={handleExportData}
               className="w-full bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-medium py-3 px-6 rounded-lg transition active:scale-98 min-h-[52px]"
             >
@@ -247,7 +254,7 @@ function Settings() {
 
           <div className="space-y-3 text-sm text-gray-700">
             <p>
-              <strong>버전:</strong> Cozac's Life Debugger v1.1
+              <strong>버전:</strong> Cozac's Life Debugger v1.2
             </p>
             <p>
               <strong>총 로그:</strong> {appData.metadata.totalLogs}개

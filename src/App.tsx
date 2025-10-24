@@ -8,6 +8,7 @@ import BaseCode from './pages/BaseCode';
 import DailyLog from './pages/DailyLog';
 import Report from './pages/Report';
 import Settings from './pages/Settings';
+import PastReports from './pages/PastReports';
 
 function App() {
   const [isFirstVisit, setIsFirstVisit] = useState<boolean | null>(null);
@@ -42,6 +43,9 @@ function App() {
 
         {/* 디버깅 리포트 */}
         <Route path="/report" element={<Report />} />
+
+        {/* 과거 리포트 */}
+        <Route path="/past-reports" element={<PastReports />} />
 
         {/* 설정 */}
         <Route path="/settings" element={<Settings />} />
