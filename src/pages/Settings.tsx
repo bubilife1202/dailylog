@@ -8,6 +8,7 @@ import {
   getStorageSizeMB,
   updateLastBackupDate,
 } from '../utils/localStorage';
+import VersionFooter from '../components/VersionFooter';
 
 function Settings() {
   const navigate = useNavigate();
@@ -294,6 +295,9 @@ function Settings() {
             </p>
           </div>
         </div>
+
+        {/* 버전 표시 */}
+        <VersionFooter />
       </div>
     </div>
   );
