@@ -230,7 +230,6 @@ const calculateCurrentStreak = (logs: DailyLog[]): number => {
  * 주간 로그 완성도 계산
  */
 export const getWeeklyCompletion = (): { completed: number; total: number } => {
-  const data = loadAppData();
   const today = new Date();
   const weekAgo = new Date(today);
   weekAgo.setDate(weekAgo.getDate() - 6);
@@ -250,7 +249,6 @@ export const getWeeklyCompletion = (): { completed: number; total: number } => {
  * 월간 로그 완성도 계산
  */
 export const getMonthlyCompletion = (): { completed: number; total: number } => {
-  const data = loadAppData();
   const today = new Date();
   const monthStart = new Date(today.getFullYear(), today.getMonth(), 1)
     .toISOString()

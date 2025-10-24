@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loadAppData, getDailyLogsByPeriod, saveGeneratedReport } from '../utils/localStorage';
-import type { BaseCode, DailyLog, ActivityType } from '../types';
+import type { BaseCode, ActivityType } from '../types';
 
 const MASTER_PROMPT = `[프롬프트 명령어] v1.0
 
@@ -173,8 +173,6 @@ ${dailySummary}`;
   };
 
   const handleSaveReport = () => {
-    const appData = loadAppData();
-
     const endDate = new Date();
     const startDate = new Date(endDate);
     startDate.setDate(endDate.getDate() - (Number(period) - 1));
