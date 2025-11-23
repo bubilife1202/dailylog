@@ -9,6 +9,33 @@ import {
   updateLastBackupDate,
 } from '../utils/localStorage';
 import VersionFooter from '../components/VersionFooter';
+import HelpButton from '../components/HelpButton';
+
+const SETTINGS_HELP = {
+  title: '⚙️ 설정 도움말',
+  sections: [
+    {
+      question: '데이터 백업은 왜 필요한가요?',
+      answer: '브라우저 캐시를 지우거나 다른 기기에서 사용하고 싶을 때 데이터를 복원할 수 있습니다.\n\n정기적으로 백업해두면 안전해요!\n\n💾 권장: 매달 1일에 백업하기',
+    },
+    {
+      question: '백업 파일은 어떻게 사용하나요?',
+      answer: '1. [데이터 내보내기]로 JSON 파일 다운로드\n2. 안전한 곳에 보관 (클라우드, USB 등)\n3. 나중에 [데이터 가져오기]로 복원\n\n💡 다른 기기에서도 같은 파일로 복원 가능!',
+    },
+    {
+      question: 'Base Code를 바꾸면 어떻게 되나요?',
+      answer: 'Base Code를 업데이트하면:\n• 새 버전이 활성화됩니다\n• 이전 버전은 자동으로 저장됩니다\n• 과거 기록은 그대로 유지됩니다\n\n💡 3개월마다 한 번씩 업데이트하면 나의 변화를 추적할 수 있어요!',
+    },
+    {
+      question: '모든 데이터 삭제는 어떤 경우에?',
+      answer: '⚠️ 주의: 이 기능은 되돌릴 수 없습니다!\n\n사용하는 경우:\n• 앱을 완전히 초기화하고 싶을 때\n• 테스트 데이터를 삭제하고 싶을 때\n\n반드시 백업 후 삭제하세요!',
+    },
+    {
+      question: '데이터가 어디에 저장되나요?',
+      answer: '100% 이 브라우저의 localStorage에만 저장됩니다.\n\n• 서버 전송 없음\n• 외부 접근 불가\n• 완전한 프라이버시\n\n단점: 브라우저 캐시 삭제시 데이터 손실 가능\n→ 백업 필수!',
+    },
+  ],
+};
 
 function Settings() {
   const navigate = useNavigate();
@@ -299,6 +326,9 @@ function Settings() {
         {/* 버전 표시 */}
         <VersionFooter />
       </div>
+
+      {/* 도움말 버튼 */}
+      <HelpButton content={SETTINGS_HELP} />
     </div>
   );
 }

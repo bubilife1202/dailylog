@@ -3,6 +3,33 @@ import { useNavigate } from 'react-router-dom';
 import { loadAppData, getDailyLogsByPeriod, saveGeneratedReport } from '../utils/localStorage';
 import type { BaseCode, ActivityType } from '../types';
 import VersionFooter from '../components/VersionFooter';
+import HelpButton from '../components/HelpButton';
+
+const REPORT_HELP = {
+  title: '🤖 AI 분석 도움말',
+  sections: [
+    {
+      question: '왜 ChatGPT에 직접 붙여넣어야 하나요?',
+      answer: '100% 프라이버시를 보장하기 위해서입니다.\n\n서버에 데이터를 전송하지 않고, 당신이 직접 ChatGPT에 붙여넣으면 데이터는 오직 당신과 OpenAI 사이에만 존재합니다.\n\n우리 서비스는 당신의 데이터를 절대 보지 못합니다.',
+    },
+    {
+      question: '어떻게 붙여넣나요?',
+      answer: '1. [데이터 복사] 클릭\n2. ChatGPT 창 열기\n3. Ctrl+V 붙여넣기\n4. Shift+Enter로 줄바꿈\n5. [프롬프트 복사] 클릭\n6. Ctrl+V 붙여넣기\n7. Enter 전송!\n\n💡 모바일에서는 텍스트를 길게 눌러 복사할 수 있어요.',
+    },
+    {
+      question: 'ChatGPT가 없어도 되나요?',
+      answer: '아니요, ChatGPT 계정이 필요합니다.\n\nOpenAI의 무료 ChatGPT 계정이면 충분해요!\n(chat.openai.com에서 무료 가입 가능)\n\n유료 버전(ChatGPT Plus)을 쓰면 더 정교한 분석을 받을 수 있지만, 무료도 충분히 유용합니다.',
+    },
+    {
+      question: '분석 기간은 어떻게 선택하나요?',
+      answer: '• 최근 7일 (권장): 이번 주 패턴 파악\n• 최근 14일: 2주 간의 변화 추세\n• 최근 30일: 한 달 간의 큰 그림\n\n처음에는 7일로 시작하세요!\n로그가 많을수록 AI 분석이 정확해집니다.',
+    },
+    {
+      question: '리포트를 저장하는 이유는?',
+      answer: '"이 리포트 저장하기" 버튼을 누르면 이 데이터 패킷이 저장됩니다.\n\n📚 "과거 리포트 보기"에서 언제든 다시 볼 수 있고, 과거와 현재를 비교할 수 있어요.\n\n3개월 전의 나 vs 지금의 나를 비교하면 성장이 보입니다!',
+    },
+  ],
+};
 
 const MASTER_PROMPT = `[프롬프트 명령어] v1.0
 
@@ -326,6 +353,9 @@ ${dailySummary}`;
         {/* 버전 표시 */}
         <VersionFooter />
       </div>
+
+      {/* 도움말 버튼 */}
+      <HelpButton content={REPORT_HELP} />
     </div>
   );
 }

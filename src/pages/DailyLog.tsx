@@ -4,6 +4,7 @@ import { saveDailyLog, getDailyLog, loadAppData, getWeeklyCompletion } from '../
 import type { DailyLog as DailyLogType, ActivityType, EmotionType } from '../types';
 import Calendar from '../components/Calendar';
 import VersionFooter from '../components/VersionFooter';
+import HelpButton from '../components/HelpButton';
 
 const activities: ActivityType[] = ['업무', '공부', '운동', '관계', '휴식', '창작', '기타'];
 const emotions: { emoji: EmotionType; label: string }[] = [
@@ -14,6 +15,32 @@ const emotions: { emoji: EmotionType; label: string }[] = [
   { emoji: '😥', label: '피로/우울' },
   { emoji: '🤯', label: '혼란/스트레스' },
 ];
+
+const DAILY_LOG_HELP = {
+  title: '📝 하루 기록 도움말',
+  sections: [
+    {
+      question: '매일 기록해야 하나요?',
+      answer: '매일 기록하면 좋지만, 필수는 아닙니다.\n이번 주에 최소 3일만 기록하면 AI 분석을 받을 수 있어요.\n\n연속 기록하면 🔥 스트릭이 쌓여서 동기부여가 됩니다!',
+    },
+    {
+      question: '3초로 어떻게 기록하나요?',
+      answer: '1️⃣ 에너지 레벨 슬라이더 조정 (1초)\n2️⃣ 주요 활동 버튼 클릭 (1초)\n3️⃣ 감정 이모지 선택 (1초)\n\n끝! 한 줄 메모는 선택사항이에요.',
+    },
+    {
+      question: '과거 날짜도 기록할 수 있나요?',
+      answer: '네! 날짜 위의 ← 버튼을 눌러서 과거 날짜를 선택하고 기록할 수 있어요.\n\n📅 캘린더 보기를 누르면 한눈에 보면서 선택할 수도 있습니다.',
+    },
+    {
+      question: '어제와 비슷한 날은 어떻게 하나요?',
+      answer: '어제 로그가 있으면 "💡 어제는 이랬어요" 박스가 나타납니다.\n\n"오늘도 비슷해요" 버튼을 누르면 어제 데이터가 자동으로 채워져요!\n(메모만 비워지니 새로 작성하면 됩니다)',
+    },
+    {
+      question: 'AI 분석은 언제 받을 수 있나요?',
+      answer: '이번 주에 최소 3일 기록하면 "📊 이번 주 AI 분석 받기" 버튼이 활성화됩니다.\n\n7일 모두 기록하면 더 정확한 분석을 받을 수 있어요!',
+    },
+  ],
+};
 
 function DailyLog() {
   const navigate = useNavigate();
@@ -86,13 +113,43 @@ function DailyLog() {
       createdAt: new Date().toISOString(),
     };
 
+    // 저장 전 총 로그 수 체크 (첫 로그 감지용)
+    const beforeData = loadAppData();
+    const isFirstLog = beforeData.metadata.totalLogs === 0;
+
     saveDailyLog(log);
-    alert('✅ 로그 저장 완료!');
 
     // 스트릭 및 주간 완성도 업데이트
     const data = loadAppData();
     setStreak(data.metadata.currentStreak);
-    setWeeklyCompletion(getWeeklyCompletion());
+    const newWeeklyCompletion = getWeeklyCompletion();
+    setWeeklyCompletion(newWeeklyCompletion);
+
+    // 첫 로그에는 특별한 피드백
+    if (isFirstLog) {
+      const energyFeedback =
+        energy >= 4
+          ? '오늘 에너지가 높으시네요! 🔥'
+          : energy <= 2
+          ? '오늘은 좀 피곤하시군요. 휴식도 중요해요! 💙'
+          : '적당한 에너지 레벨이네요 😊';
+
+      alert(
+        `🎉 첫 로그 완성!\n\n${energyFeedback}\n\n7일 모으면 AI가 당신의 패턴을 분석해줄 거예요.\n지금 1/7 완료! 내일도 3초만 투자하세요 💪`
+      );
+    } else {
+      // 기존 로그는 진행도 포함 피드백
+      const daysUntilAnalysis = Math.max(0, 3 - newWeeklyCompletion.completed);
+      if (daysUntilAnalysis > 0) {
+        alert(
+          `✅ 로그 저장 완료!\n\n이번 주 ${newWeeklyCompletion.completed}/7일 기록 완료\n${daysUntilAnalysis}일만 더 기록하면 AI 분석을 받을 수 있어요! 🤖`
+        );
+      } else {
+        alert(
+          `✅ 로그 저장 완료!\n\n이번 주 ${newWeeklyCompletion.completed}/7일 기록 완료\n지금 바로 AI 분석을 받을 수 있어요! 📊`
+        );
+      }
+    }
   };
 
   const canGenerateReport = weeklyCompletion.completed >= 3;
@@ -127,25 +184,40 @@ function DailyLog() {
 
       {/* 메인 컨텐츠 */}
       <div className="max-w-4xl mx-auto px-4 py-8">
-        {/* 스트릭 및 완성도 */}
-        {(streak > 0 || weeklyCompletion.completed > 0) && (
-          <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-6 mb-6 text-white">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-              {streak > 0 && (
-                <div className="mb-4 md:mb-0">
-                  <p className="text-sm opacity-90">연속 기록</p>
-                  <p className="text-3xl font-bold">🔥 {streak}일</p>
-                </div>
-              )}
-              <div>
-                <p className="text-sm opacity-90">이번 주 로그 완성도</p>
-                <p className="text-2xl font-bold">
-                  {weeklyCompletion.completed} / {weeklyCompletion.total}일
-                </p>
-              </div>
+        {/* AI 분석 진행도 (항상 표시) */}
+        <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-6 mb-6 text-white">
+          <div className="mb-4">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-sm opacity-90">🤖 AI 분석까지</p>
+              <p className="text-sm font-bold">
+                {weeklyCompletion.completed >= 3
+                  ? '✅ 분석 가능!'
+                  : `${Math.max(0, 3 - weeklyCompletion.completed)}일 남음`}
+              </p>
             </div>
+            {/* 진행도 바 */}
+            <div className="w-full bg-white/20 rounded-full h-3 overflow-hidden">
+              <div
+                className="bg-white h-full rounded-full transition-all duration-500"
+                style={{
+                  width: `${Math.min(100, (weeklyCompletion.completed / 3) * 100)}%`,
+                }}
+              ></div>
+            </div>
+            <p className="text-xs opacity-75 mt-2">
+              이번 주 {weeklyCompletion.completed} / 7일 기록 완료
+              {weeklyCompletion.completed < 3 && ' (최소 3일 필요)'}
+            </p>
           </div>
-        )}
+
+          {/* 스트릭 정보 */}
+          {streak > 0 && (
+            <div className="flex items-center justify-between pt-4 border-t border-white/20">
+              <p className="text-sm opacity-90">연속 기록 스트릭</p>
+              <p className="text-2xl font-bold">🔥 {streak}일</p>
+            </div>
+          )}
+        </div>
 
         {/* 로그 입력 카드 */}
         <div className="bg-white rounded-xl shadow-lg p-6 md:p-8">
@@ -333,6 +405,9 @@ function DailyLog() {
         {/* 버전 표시 */}
         <VersionFooter />
       </div>
+
+      {/* 도움말 버튼 */}
+      <HelpButton content={DAILY_LOG_HELP} />
     </div>
   );
 }
